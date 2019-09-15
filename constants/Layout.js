@@ -7,8 +7,12 @@ const statusBarHeight = getStatusBarHeight()
 
 export default {
   window: {
-    width,
-    height,
+    widthHeight: width,
+    windowHeight: height,
+  },
+  mockup: {
+    mockupWidth: 375,
+    mockupHeight: 812
   },
   statusBarHeight: statusBarHeight,
   isSmallDevice: width < 375,
