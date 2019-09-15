@@ -13,34 +13,45 @@ import { Divider } from '../assets/images'
 
 export default class SessionStatistics extends Component {
     getSessionFrequency() {
-        return fetch('http://35.203.112.83:5000/vape/weekly/session-frequency')
-        .then((response) => response.json())
-        .then((responseJson) => {
-            console.log(response)
-            console.log(responseJson)
-            // this.setState({ sessionFrequency: responseJson })
-            return responseJson
-        })
-        .catch((error) => {
-        console.error(error);
-        });
+        try {
+            return fetch('http://35.203.112.83:5000/vape/weekly/session-frequency')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(response)
+                console.log(responseJson)
+                // this.setState({ sessionFrequency: responseJson })
+                return responseJson
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     getAvgDuration = () => {
-        return fetch('http://35.203.112.83:5000/vape/weekly/avg-duration')
-          .then((response) => response.json())
-          .then((responseJson) => {
-            this.setState({ averageDuration: `${parseInt(responseJson)} min` })
-            return responseJson;
-          })
-          .catch((error) => {
-            console.error(error);
+        try {
+            return fetch('http://35.203.112.83:5000/vape/weekly/avg-duration')
+            .then((response) => response.json())
+            .then((responseJson) => {
+              this.setState({ averageDuration: `${parseInt(responseJson)} min` })
+              return responseJson;
+            })
+            .catch((error) => {
+              console.error(error);
           });
-      }
+        } catch (e) {
+            console.log(e)
+        }
+        
+    }
 
     componentDidMount() {
+        // comment these calls if the servers are not running
         this.getSessionFrequency()
         this.getAvgDuration()
+        
         const socket = socketIOClient('http://35.203.112.83:5000')
         socket.on('ping', () => {
             console.log('ping')
