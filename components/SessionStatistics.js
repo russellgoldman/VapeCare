@@ -12,7 +12,7 @@ const { white, black, supportGrey, blue } = colors
 import { Divider } from '../assets/images'
 
 export default class SessionStatistics extends Component {
-    async getSessionFrequency() {
+    getSessionFrequency() {
         return fetch('http://35.203.112.83:5000/vape/weekly/session-frequency')
         .then((response) => response.json())
         .then((responseJson) => {
@@ -30,7 +30,7 @@ export default class SessionStatistics extends Component {
         return fetch('http://35.203.112.83:5000/vape/weekly/avg-duration')
           .then((response) => response.json())
           .then((responseJson) => {
-            this.setState({ averageDuration: parseInt(responseJson) })
+            this.setState({ averageDuration: `${parseInt(responseJson)} min` })
             return responseJson;
           })
           .catch((error) => {
@@ -38,16 +38,28 @@ export default class SessionStatistics extends Component {
           });
       }
 
-    componentWillMount() {
-        // this.getSessionFrequency()
+    componentDidMount() {
+        this.getSessionFrequency()
         this.getAvgDuration()
-        const socket = socketIOClient('http://35.203.112.83:5000', {
-            secure: false,
-        })
+        const socket = socketIOClient('http://35.203.112.83:5000')
+        socket.on('ping', () => {
+            console.log('ping')
+        });
+        socket.connect(); 
+        socket.on('error', (error) => {
+            console.log(error)
+        });
+        socket.on('event', function(data){
+            console.log('connected to socket server'); 
+        });
         socket.on("connect", () => {
             console.log('connected to socket server'); 
         })
         socket.on("no anomaly", (res) => { 
+            console.log(res)
+            console.log('connected to socket server'); 
+        })
+        socket.on("new anomaly", (res) => { 
             console.log(res)
             console.log('connected to socket server'); 
         })
@@ -69,7 +81,7 @@ export default class SessionStatistics extends Component {
             <>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{
-                        paddingLeft: calcWidth(48),
+                        paddingLeft: calcWidth(46),
                         fontFamily: 'sf-bold',
                         fontSize: 15,
                         color: black,
@@ -91,7 +103,7 @@ export default class SessionStatistics extends Component {
                         <Text style={value}>{sessionFrequency}</Text>
                     </View>
                     <Image source={Divider} style={{
-                        height: calcHeight(92),
+                        height: calcHeight(116),
                         width: calcWidth(2),
                         alignSelf: 'center'
                     }}></Image>
@@ -110,7 +122,7 @@ export default class SessionStatistics extends Component {
 const styles = {
     sessionContainer: {
         flexDirection: 'row',
-        height: calcHeight(116),
+        height: calcHeight(146),
         width: calcWidth(319),
         marginTop: calcHeight(14),
         marginLeft: calcWidth(28),

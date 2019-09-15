@@ -2,11 +2,11 @@ import React from 'react';
 import {
   ImageBackground,
   Text,
-  View,
+  View
 } from 'react-native';
 
 import { Background } from '../assets/images'
-import { SessionStatistics } from '../components';
+import { SessionStatistics, DailyChallenge } from '../components';
 
 import layoutConstants from '../constants/Layout'
 const { statusBarHeight, calcWidth, calcHeight } = layoutConstants
@@ -42,6 +42,8 @@ export default StatisticsScreen = () => {
       </View>
       <View style={{ marginTop: calcHeight(118) }} />
       <SessionStatistics />
+      <View style={{ marginTop: calcHeight(65) }} />
+      <DailyChallenge />
     </ImageBackground>
   )
 }
