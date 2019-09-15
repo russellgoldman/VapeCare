@@ -22,7 +22,6 @@ export default StatisticsScreen = () => {
     imgBackground,
     introTextContainer
   } = styles
-  console.log(layoutConstants)
 
   return (
     <ImageBackground source={Background} style={imgBackground}>
