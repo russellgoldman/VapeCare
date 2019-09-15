@@ -17,9 +17,7 @@ export default class SessionStatistics extends Component {
             return fetch('http://35.203.112.83:5000/vape/weekly/session-frequency')
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(response)
-                console.log(responseJson)
-                // this.setState({ sessionFrequency: responseJson })
+                this.setState({ sessionFrequency: responseJson })
                 return responseJson
             })
             .catch((error) => {
@@ -50,7 +48,7 @@ export default class SessionStatistics extends Component {
     componentDidMount() {
         // comment these calls if the servers are not running
         this.getSessionFrequency()
-        this.getAvgDuration()
+        // this.getAvgDuration()
         
         const socket = socketIOClient('http://35.203.112.83:5000')
         socket.on('ping', () => {
