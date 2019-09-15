@@ -5,17 +5,19 @@ import {
   View,
 } from 'react-native';
 
-const moment = require("moment")
-import layoutConstants from '../constants/Layout'
 import { Background } from '../assets/images'
+import { SessionStatistics } from '../components';
+
+import layoutConstants from '../constants/Layout'
+const { statusBarHeight, calcWidth, calcHeight } = layoutConstants
+
 import colors from '../constants/Colors'
 const { white, black, supportGrey } = colors
-const { statusBarHeight, window, mockup } = layoutConstants
-const { windowHeight, windowWidth } = window
-const { mockupHeight, mockupWidth } = mockup
+
+const moment = require("moment")
 const date = moment()
 
-export default HomeScreen = () => {
+export default StatisticsScreen = () => {
   const {
     imgBackground,
     introTextContainer
@@ -28,16 +30,19 @@ export default HomeScreen = () => {
         <Text style={{
           fontSize: 32,
           fontFamily: 'sf-bold',
-          color: white
+          color: white,
+          letterSpacing: 1
         }}>Good morning John</Text>
         <Text style={{
-          paddingTop: windowHeight * (12 / mockupHeight),
+          paddingTop: calcHeight(12),
           fontSize: 15,
           fontFamily: 'sf-semibold',
-          color: white
+          color: white,
+          letterSpacing: 1,
         }}>{date.format("dddd MMMM Do").toUpperCase()}</Text>
       </View>
-      
+      <View style={{ marginTop: calcHeight(118) }} />
+      <SessionStatistics />
     </ImageBackground>
   )
 }
@@ -55,6 +60,6 @@ const styles = {
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: windowHeight * (30 / mockupHeight)
+    paddingTop: calcHeight(30)
   }
 }

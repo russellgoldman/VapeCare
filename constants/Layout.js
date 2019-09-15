@@ -1,19 +1,17 @@
 import { Dimensions } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const mockupWidth = 375
+const mockupHeight = 812
+
 const statusBarHeight = getStatusBarHeight()
 
 export default {
-  window: {
-    widthHeight: width,
-    windowHeight: height,
-  },
-  mockup: {
-    mockupWidth: 375,
-    mockupHeight: 812
-  },
+  calcWidth: (width) => windowWidth * (width / mockupWidth),
+  calcHeight: (height) => windowHeight * (height / mockupHeight),
   statusBarHeight: statusBarHeight,
-  isSmallDevice: width < 375,
+  isSmallDevice: windowWidth < 375,
 };
